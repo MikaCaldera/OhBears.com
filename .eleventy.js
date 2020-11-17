@@ -30,6 +30,7 @@ module.exports = function(config) {
   // Passthrough copy
   config.addPassthroughCopy('src/fonts');
   config.addPassthroughCopy({ 'src/_assets/images': '_assets/images' });
+  config.addPassthroughCopy({ 'src/_assets/icons': '_assets/icons' });
   config.addPassthroughCopy('src/js');
   config.addPassthroughCopy('src/admin/config.yml');
   config.addPassthroughCopy('src/admin/previews.js');
