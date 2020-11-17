@@ -1,7 +1,7 @@
 {
-  "name": "hylia",
+  "name": "Mika-hylia",
   "version": "0.7.0",
-  "description": "A simple Eleventy starter kit to help you have a blog of your own",
+  "description": "My attempt to do hylia that I create",
   "main": "index.js",
   "dependencies": {
     "@11ty/eleventy": "^0.10.0",
