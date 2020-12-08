@@ -29,8 +29,7 @@
     "rollup": "^1.32.1",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-json": "^4.0.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-terser": "^7.0.0"
+    "rollup-plugin-node-resolve": "^5.2.0"
   },
   "scripts": {
     "sass:tokens": "npx json-to-scss src/_data/tokens.json src/_assets/scss/_tokens.scss",
@@ -39,7 +38,8 @@
     "cms:bundle": "rollup --config",
     "start": "cross-env ELEVENTY_ENV=development concurrently \"npm run sass:process -- --watch\" \"npm run cms:bundle -- --watch\" \"chokidar \\\"src/**\\\" -c \\\"npm run cms:precompile\\\"\" \"npm run serve\"",
     "serve": "cross-env ELEVENTY_ENV=development npx eleventy --serve",
-    "production": "npm run sass:process && npm run cms:precompile && npm run cms:bundle && npx eleventy"
+    "production": "npm run sass:process && npm run cms:precompile && npm run cms:bundle && npx eleventy",
+    "debug": "DEBUG=* npx @11ty/eleventy --input=src"
   },
   "repository": {
     "type": "git",
