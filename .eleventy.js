@@ -14,7 +14,10 @@ const parseTransform = require('./src/transforms/parse-transform.js');
 // Import data files
 const site = require('./src/_data/site.json');
 
-module.exports = function(config) {
+// Lazy load and LQIP
+const lazyImagesPlugin = require('eleventy-plugin-lazyimages');
+
+module.exports = function(config) {   
   // Filters
   config.addFilter('dateFilter', dateFilter);
   config.addFilter('markdownFilter', markdownFilter);
@@ -30,14 +33,17 @@ module.exports = function(config) {
   config.addTransform('parse', parseTransform);
 
   // Passthrough copy
-  config.addPassthroughCopy('src/fonts');
+  config.addPassthroughCopy({ 'src/_assets/output': '_assets' });
   config.addPassthroughCopy({ 'src/_assets/images': '_assets/images' });
   config.addPassthroughCopy({ 'src/_assets/icons': '_assets/icons' });
   config.addPassthroughCopy('src/js');
-  config.addPassthroughCopy('src/admin/config.yml');
-  config.addPassthroughCopy('src/admin/previews.js');
+  config.addPassthroughCopy({ 'src/_views/admin/config.yml': 'admin/config.yml' });
+  config.addPassthroughCopy({ 'src/_views/admin/previews.js': 'admin/previews.js' });
   config.addPassthroughCopy('node_modules/nunjucks/browser/nunjucks-slim.js');
   config.addPassthroughCopy('src/robots.txt');
+  config.addPlugin(lazyImagesPlugin, {
+    imgSelector: '.content img',
+  });
 
   const now = new Date();
 
