@@ -17,7 +17,10 @@ const site = require('./src/_data/site.json');
 // Lazy load and LQIP
 const lazyImagesPlugin = require('eleventy-plugin-lazyimages');
 
-module.exports = function(config) {   
+// PWA
+const pluginPWA = require("eleventy-plugin-pwa");
+
+module.exports = function(config) {
   // Filters
   config.addFilter('dateFilter', dateFilter);
   config.addFilter('markdownFilter', markdownFilter);
@@ -36,7 +39,7 @@ module.exports = function(config) {
   config.addPassthroughCopy({ 'src/_assets/output': '_assets' });
   config.addPassthroughCopy({ 'src/_assets/images': '_assets/images' });
   config.addPassthroughCopy({ 'src/_assets/icons': '_assets/icons' });
-  config.addPassthroughCopy('src/js');
+  config.addPassthroughCopy('src/static');
   config.addPassthroughCopy({ 'src/_views/admin/config.yml': 'admin/config.yml' });
   config.addPassthroughCopy({ 'src/_views/admin/previews.js': 'admin/previews.js' });
   config.addPassthroughCopy('node_modules/nunjucks/browser/nunjucks-slim.js');
@@ -49,14 +52,15 @@ module.exports = function(config) {
 
   // Custom collections
   const livePosts = post => post.date <= now && !post.data.draft;
+
   config.addCollection('posts', collection => {
     return [
-      ...collection.getFilteredByGlob('./src/posts/*.md').filter(livePosts)
+      ...collection.getFilteredByGlob('./src/collections/posts/*.md').filter(livePosts)
     ].reverse();
   });
 
   config.addCollection('postFeed', collection => {
-    return [...collection.getFilteredByGlob('./src/posts/*.md').filter(livePosts)]
+    return [...collection.getFilteredByGlob('./src/collections/posts/*.md').filter(livePosts)]
       .reverse()
       .slice(0, site.maxPostsPerPage);
   });
@@ -64,6 +68,21 @@ module.exports = function(config) {
   // Plugins
   config.addPlugin(rssPlugin);
   config.addPlugin(syntaxHighlight);
+
+  // PWA
+  if(process.env.ELEVENTY_ENV != "development") {
+    config.addPlugin(pluginPWA, {
+      swDest: "dist/service-worker.js",
+      globDirectory: "./dist",
+      clientsClaim: true,
+      skipWaiting: true,
+      globIgnores: [
+        'index.html',
+        'admin\/**',
+        'thank-you\/**',
+      ]
+    });
+  }
 
   // 404
   config.setBrowserSyncConfig({
@@ -83,7 +102,8 @@ module.exports = function(config) {
   return {
     dir: {
       input: 'src',
-      output: 'dist'
+      output: 'dist',
+      includes: "_views/_includes"
     },
     passthroughFileCopy: true
   };
