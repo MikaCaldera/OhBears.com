@@ -5,39 +5,39 @@ const json = require('rollup-plugin-json');
 import {terser} from 'rollup-plugin-terser';
 
 export default [{
-  input: 'src/_views/admin/util',
-  output: {
-    file: 'dist/admin/util.js',
-    format: 'iife',
-    name: 'previewUtil',
-  },
-  plugins: [
-    builtins(),
-    nodeResolve(),
-    commonjs(),
-    json(),
-  ]
-},
-{
-  treeshake: true,
-  input: 'src/_assets/js/app.js',
-  output: [
-    {
-      file: 'src/_assets/output/js/app.js',
-      format: 'umd',
+    input: 'src/_views/admin/util',
+    output: {
+      file: 'dist/admin/util.js',
+      format: 'iife',
       name: 'previewUtil',
     },
-    {
-      file: 'src/_assets/output/js/app.min.js',
-      format: 'iife',
-      name: 'version',
-      plugins: [terser()]
-    }
-  ],
-  plugins: [
-    builtins(),
-    nodeResolve(),
-    commonjs(),
-    json(),
-  ]
+    plugins: [
+      builtins(),
+      nodeResolve(),
+      commonjs(),
+      json(),
+    ]
+  },
+  {
+    treeshake: true,
+    input: 'src/_assets/js/app.js',
+    output: [
+      {
+        file: 'src/_assets/output/js/app.js',
+        format: 'umd',
+        name: 'previewUtil',
+      },
+      {
+        file: 'src/_assets/output/js/app.min.js',
+        format: 'iife',
+        name: 'version',
+        plugins: [terser()]
+      }
+    ],
+    plugins: [
+      builtins(),
+      nodeResolve(),
+      commonjs(),
+      json(),
+    ]
 }];

@@ -6,9 +6,6 @@ eleventyExcludeFromCollections: true
 
 {% extends 'layouts/base.njk' %}
 
-{# Intro content #}
-{% set introHeading = title %}
-
 {% block head %}
   <style>
     .swatches {
@@ -23,7 +20,7 @@ eleventyExcludeFromCollections: true
     }
 
     .props dt {
-      font-weight: 600;  
+      font-weight: 600;
     }
 
     .props dd + dt {
@@ -31,120 +28,255 @@ eleventyExcludeFromCollections: true
       display: block;
     }
 
-    .color {
-      border: 1px solid var(--color-mid);
+    #main-content .list-unstyled > li {
+      border-bottom: 1px solid lightgray;
+      margin-bottom: 5rem;
     }
 
-    .bg-dark code {
-      color: var(--color-light);
+    #main-content ul.swatches li {
+      margin-bottom: 0;
     }
+
+    #main-content ul.list-unstyled {
+      margin-bottom: 5rem;
+    }
+
   </style>
 {% endblock %}
 {% block content %}
   <main id="main-content" tabindex="-1">
-    {% include "partials/components/intro.njk" %}
-    <article class="[ inner-wrapper ] [ post ]">
-      <section class="[ post__body ] [ sf-flow ] [ pad-top-900 pad-bottom-900 ]">
-        <h2>Colours</h2>
+    <article class="container">
+
+        <h2 class="display-4">Logo</h2>
+        <ul class="list-unstyled">
+          <li class="list-item">
+            <figure>
+              <img src="{{ site.logo }}" alt="{{ site.name }} logo">
+            </figure>
+            <dl class="props">
+              <dt>Value</dt>
+              <dd><code>{{ site.logo }}</code></dd>
+            </dl>
+          </li>
+        </ul>
+
+        <h2 class="display-4">Navbar</h2>
+        {% include "partials/global/navigation.njk" %}
+        <ul class="list-unstyled">
+          <li class="list-item">
+              <h3>justify-navbar-contents</h3>
+            <dl class="props">
+              <dt>Value</dt>
+              <dd><code>{{ navigation['justify-navbar-contents'] }}</code></dd>
+            </dl>
+          </li>
+         <li class="list-item">
+            <h3>navbar-color-scheme</h3>
+            <dl class="props">
+              <dt>Value</dt>
+              <dd><code>{{ navigation['navbar-color-scheme'] }}</code></dd>
+            </dl>
+          </li>
+        </ul>
+
+        <h2 class="display-4">Footer</h2>
+        {% include "partials/global/site-foot.njk" %}
+        <ul class="list-unstyled">
+          <li class="list-item">
+            <h3>textAlign</h3>
+            <dl class="props">
+              <dt>Value</dt>
+              <dd><code>{{ footernavigation['textAlign'] }}</code></dd>
+            </dl>
+          </li>
+          <li class="list-item">
+            <h3>justify-footernav-contents</h3>
+            <dl class="props">
+              <dt>Value</dt>
+              <dd><code>{{ footernavigation['justify-footernav-contents'] }}</code></dd>
+            </dl>
+          </li>
+        </ul>
+
+        <h2 class="display-4">Theme Colors</h2>
         <p class="visually-hidden">Colour swatches with various values that you can copy.</p>
-        <ul class="swatches">
-          {% for color in styleguide.colors() %}
-            <li class="sf-flow">
-              <div class="[ color ] [ pad-top-900 pad-bottom-900 ]" style="background: {{ color.value }}"></div>
-              <h3 class="font-base text-500">{{ color.key }}</h3>
+        <ul class="list-unstyled swatches">
+          {% for color in styleguide.themecolors() %}
+            <li class="list-item sf-flow">
+              <div class="border p-5" style="background: {{ color.value }}"></div>
+              <h3>{{ color.key }}</h3>
               <dl class="props">
                 <dt>Value</dt>
                 <dd><code>{{ color.value }}</code></dd>
-                <dt>Sass function</dt>
-                <dd><code>get-color('{{ color.key }}')</code></dd>
-                <dt>Custom Property</dt>
-                <dd><code>var(--color-{{ color.key }})</code></dd>
-                <dt>Text util class</dt>
-                <dd><code>color-{{ color.key }}</code></dd>
-                <dt>Background util class</dt>
-                <dd><code>bg-{{ color.key }}</code></dd>
               </dl>
             </li>
           {% endfor %}
         </ul>
-        <h2>Fonts</h2>
-        <h3>Base — System stack</h3>
-        <p class="sf-flow">
-          <span aria-hidden="true" role="presentation" class="font-base text-600 md:text-800 box-block leading-tight">The quick brown fox jumps over the lazy fox</span>
-          <code>.font-base</code>
-        </p>
-        <h3>Serif — Lora</h3>
-        <p class="sf-flow">
-          <span aria-hidden="true" role="presentation" class="font-serif text-600 md:text-800 box-block leading-tight">The quick brown fox jumps over the lazy fox</span>
-          <code>.font-serif</code>
-        </p>
-        <h2>Text sizes</h2>
-        <p>Text sizes are available as standard classes or media query prefixed, such as <code>lg:text-500</code>.</p>
-        {% for size in styleguide.sizes() %}
-          <p class="text-{{ size.key }}" style="--flow-space: 1.5rem">{{ size.value }} - <code>text-{{ size.key }}</code></p>
-        {% endfor %}
-        <h2>Spacing</h2>
-        <p>There’s size ratio utilities that give you margin (<code>gap-top, gap-bottom</code>) and padding (<code>pad-top, pad-left, pad-bottom</code>).
-        <h3>Margin</h3>
-        <p class="visually-hidden">Margin token classes that you can copy</p>
-        <div>
-          {% for size in styleguide.sizes() %}
-            <div class="[ bg-dark color-light pad-top-base pad-bottom-base pad-left-base md:width-half ] [ gap-top-{{ size.key }} ]">
-              <code>gap-top-{{ size.key }}</code>
-            </div>
+
+        <h2 class="display-4">Body Colors</h2>
+        <p class="visually-hidden">Colour swatches with various values that you can copy.</p>
+        <ul class="list-unstyled swatches">
+          {% for color in styleguide.bodycolors() %}
+            <li class="list-item sf-flow">
+              <div class="border p-5" style="background: {{ color.value }}"></div>
+              <h3>{{ color.key }}</h3>
+              <dl class="props">
+                <dt>Value</dt>
+                <dd><code>{{ color.value }}</code></dd>
+              </dl>
+            </li>
           {% endfor %}
-        </div>
-        <h3>Padding</h3>
-        <p class="visually-hidden">Padding token classes that you can copy</p>
-        {% for size in styleguide.sizes() %}
-          <div class="[ bg-dark pad-left-base color-light md:width-half ] [ pad-top-{{ size.key }} ]">
-            <code>pad-top-{{ size.key }}</code>
-          </div>
-          <div class="[ bg-dark pad-left-base color-light md:width-half ] [ pad-bottom-{{ size.key }} ]">
-            <code>pad-bottom-{{ size.key }}</code>
-          </div>
-          <div class="[ bg-dark color-light md:width-half ] [ pad-left-{{ size.key }} ]">
-            <code>pad-left-{{ size.key }}</code>
-          </div>
-        {% endfor %}
-        
-        <h2>Forms</h2>
-        {% from "macros/form.njk" import label, field, textarea, confirm, select, radios, checkboxes, hidden_field, button %}
-        <form>
-          <ol class="[ field-list ]">
-            <li class="[ field-list__field-group ]">
-              {{ label("Text Label", "field-text-name") }}
-              {{ field( "text", "field-text-name", { required: true, placeholder: "Katherine Johnson", autocomplete: "name", autocorrect: "off", autocapitalize: "off", description: "Optional description. Note: This field type can take any valid input type." } ) }}
+        </ul>
+
+        <h2 class="display-4">Header Colors</h2>
+        <p class="visually-hidden">Colour swatches with various values that you can copy.</p>
+        <ul class="list-unstyled swatches">
+          {% for color in styleguide.headercolors() %}
+            <li class="list-item sf-flow">
+              <div class="border p-5" style="background: {{ color.value }}"></div>
+              <h3>{{ color.key }}</h3>
+              <dl class="props">
+                <dt>Value</dt>
+                <dd><code>{{ color.value }}</code></dd>
+              </dl>
             </li>
-            <li class="[ field-list__field-group ]">
-              {{ label("Email Label", "field-email-name") }}
-              {{ field( "email", "field-email-name", { required: true, placeholder: "katherine@johnson.tld", autocomplete: "email" } ) }}
+          {% endfor %}
+        </ul>
+
+        <h2>Global Settings</h2>
+        <ul class="list-unstyled">
+          <li class="list-item sf-flow">
+            <div class="bg-dark text-light p-5 rounded">
+              {% if tokens['global-settings']['enable-rounded'] %}
+                Elements will have rounded corners
+              {% else %}
+                Elements will have square corners
+              {% endif %}
+            </div>
+            <h3>enable-rounded</h3>
+            <dl class="props">
+              <dt>Value</dt>
+              <dd><code>{{ tokens['global-settings']['enable-rounded'] }}</code></dd>
+            </dl>
+          </li>
+          <li class="list-item sf-flow">
+            <button class="btn btn-primary">
+              {% if tokens['global-settings']['enable-shadows'] %}
+                Buttons have shadows
+              {% else %}
+                Buttons do not have shadows
+              {% endif %}
+            </button>
+            <h3>enable-shadows</h3>
+            <dl class="props">
+              <dt>Value</dt>
+              <dd><code>{{ tokens['global-settings']['enable-shadows'] }}</code></dd>
+            </dl>
+          </li>
+          <li class="list-item sf-flow">
+            <button class="btn btn-primary">
+              {% if tokens['global-settings']['enable-gradients'] %}
+                Buttons have gradients
+              {% else %}
+                Buttons do not have gradients
+              {% endif %}
+            </button>
+            <h3>enable-gradients</h3>
+            <dl class="props">
+              <dt>Value</dt>
+              <dd><code>{{ tokens['global-settings']['enable-gradients'] }}</code></dd>
+            </dl>
+          </li>
+          <li class="list-item sf-flow">
+            <h3>enable-responsive-font-sizes</h3>
+            <dl class="props">
+              <dt>Value</dt>
+              <dd><code>{{ tokens['global-settings']['enable-responsive-font-sizes'] }}</code></dd>
+            </dl>
+          </li>
+        </ul>
+
+        <h2>Fonts</h2>
+        <ul class="list-unstyled">
+          <li class="list-item sf-flow">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque placerat elit vel venenatis mattis. Maecenas rhoncus id orci porta lobortis. Vivamus efficitur erat a eros vestibulum aliquet.</p>
+            <h3>Body Font</h3>
+            <dl class="props">
+              <dt>Value</dt>
+              <dd><code>{{ tokens['fonts']['base'] }}</code></dd>
+            </dl>
+          </li>
+          <li class="list-item sf-flow">
+            <h1>Lorem Ipsum Dolor</h1>
+            <h3>Headings Font</h3>
+            <dl class="props">
+              <dt>Value</dt>
+              <dd><code>{{ tokens['fonts']['headings-font-family'] }}</code></dd>
+            </dl>
+          </li>
+          <li class="list-item sf-flow">
+            <h1>Heading 1</h1>
+            <h3>heading-1-font-size</h3>
+            <dl class="props">
+              <dt>Value</dt>
+              <dd><code>{{ tokens['fonts']['h1-font-size'] }}rem</code></dd>
+            </dl>
+          </li>
+          <li class="list-item sf-flow">
+            <h2>Heading 2</h2>
+            <h3>heading-2-font-size</h3>
+            <dl class="props">
+              <dt>Value</dt>
+              <dd><code>{{ tokens['fonts']['h2-font-size'] }}rem</code></dd>
+            </dl>
+          </li>
+          <li class="list-item sf-flow">
+            <h3>Heading 3</h3>
+            <h3>heading-3-font-size</h3>
+            <dl class="props">
+              <dt>Value</dt>
+              <dd><code>{{ tokens['fonts']['h3-font-size'] }}rem</code></dd>
+            </dl>
+          </li>
+          <li class="list-item sf-flow">
+            <h4>Heading 4</h4>
+            <h3>heading-4-font-size</h3>
+            <dl class="props">
+              <dt>Value</dt>
+              <dd><code>{{ tokens['fonts']['h4-font-size'] }}rem</code></dd>
+            </dl>
+          </li>
+          <li class="list-item sf-flow">
+            <h5>Heading 5</h5>
+            <h3>heading-5-font-size</h3>
+            <dl class="props">
+              <dt>Value</dt>
+              <dd><code>{{ tokens['fonts']['h5-font-size'] }}rem</code></dd>
+            </dl>
+          </li>
+          <li class="list-item sf-flow">
+            <h6>Heading 6</h6>
+            <h3>heading-6-font-size</h3>
+            <dl class="props">
+              <dt>Value</dt>
+              <dd><code>{{ tokens['fonts']['h6-font-size'] }}rem</code></dd>
+            </dl>
+          </li>
+        </ul>
+
+        <h2>Spacing</h2>
+        <ul class="list-unstyled">
+          {% for spacing in styleguide.spacing() %}
+            <li class="list-item sf-flow">
+              <h3>{{ spacing.key }}</h3>
+              <dl class="props">
+                <dt>Value</dt>
+                <dd><code>{{ spacing.value }}rem</code></dd>
+              </dl>
             </li>
-            <li class="[ field-list__field-group ]">
-              {{ label("Textarea Label", "field-textarea-name") }}
-              {{ textarea( "field-textarea-name", { required: true, autocapitalize: "sentences", spellcheck: "true" } ) }}
-            </li>
-            <li class="[ field-list__field-group ]">
-              {{ label("Select Label", "field-select-name") }}
-              {{ select( "select", [ "option 1", {label: "Option II", value: "option 2"} ], { required: true, options_before: ["prepended option"], options_after: ["appended option"], description: "Optional description." } ) }}
-            </li>
-            <li class="[ field-list__field-group field-list__field-group--confirm ]">
-              {{ confirm("Confirm this statement", "confirm") }}
-            </li>
-            <li class="[ field-list__field-group ]">
-              {{ radios("Radio Legend", "field-radio-name", [ "Yes", { label: "Not really", value: "No", note: "Note about choice." } ], { description: "Optional description." } ) }}
-            </li>
-            <li class="[ field-list__field-group ]">
-              {{ checkboxes("Checkbox Legend", "field-checkbox-name", [ "Choice 1", { label: "Choice 2", value: "Choice 2", note: "Note about choice." }, "Choice 3" ], { description: "Optional description." } ) }}
-            </li>
-            <li class="[ field-list__field-group ]">
-              There is a hidden field here…
-              {{ hidden_field("hidden-name", "hidden-value") }}
-            </li>
-          </ol>
-          {{ button("Button Text") }}
-        </form>
-      </section>
+          {% endfor %}
+        </ul>
+
     </article>
   </main>
 {% endblock %}

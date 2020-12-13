@@ -1,4 +1,6 @@
 {
+  "justify-navbar-contents": "end",
+  "navbar-color-scheme": "light",
   "items": [
     {
       "text": "Home",
@@ -6,13 +8,8 @@
       "external": false
     },
     {
-      "text": "GitHub",
-      "url": "https://github.com/hankchizljaw/hylia",
-      "external": true
-    },
-    {
-      "text": "Example Contact Page",
-      "url": "/contact",
+      "text": "Contact",
+      "url": "/contact/",
       "external": false
     }
   ]

@@ -393,29 +393,6 @@ collections:
               - {label: "Text", name: "text", widget: "string"}
               - {label: "Url", name: "url", widget: "string"}
               - {label: "icon", name: "icon", widget: "image"}
-      - label: "Theme Structure and Design"
-        name: "design"
-        delete: false
-        file: "src/_data/design.json"
-        fields:
-          - label: "Header and Footer"
-            name: "theme-structure"
-            widget: "object"
-            fields:
-            - label: 'Navigation Design'
-              name: 'navigation'
-              widget: 'select'
-              options:
-              - { label: "Navigation 1", value: "navigation-1" }
-              - { label: "Navigation 2", value: "navigation-2" }
-              default: "navigation-1"
-            - label: 'Footer Design'
-              name: 'footer'
-              widget: 'select'
-              options:
-              - { label: "Footer 1", value: "footer-1" }
-              - { label: "Footer 2", value: "footer-2" }
-              default: "footer-1"
       - label: "Style Settings"
         name: "theme"
         delete: false

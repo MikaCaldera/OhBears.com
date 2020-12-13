@@ -1,16 +1,22 @@
 {% extends 'layouts/base.njk' %}
 
-{# Intro content #}
-{% set introHeading = title %}
-
 {% block content %}
-  <main id="main-content" tabindex="-1">
-    <article class="[ post ] [ h-entry ]">
-      {% include "partials/components/intro.njk" %}
-      <div class="[ post__body ] [ inner-wrapper ] [ leading-loose pad-top-900 pad-bottom-900 text-500 ] [ sf-flow ] [ e-content ]">
+  <main class="content content-page" id="main-content" tabindex="-1">
+    <div class="row row-content">
+      <article class="col-content">
+        <header class="page-title">
+          <h1>{{ title | safe }}</h1>
+        </header>
         {{ content | safe }}
-      </div>
-    </article>
+      </article>
+      <aside class="sidebar col-sidebar">
+        {% if site.sidebarTitle != "" %}
+          <h3>{{ site.sidebarTitle | safe }}</h3>
+          <hr>
+        {% endif %}
+        {{ site.formHtml | safe }}
+      </aside>
+    </div>
   </main>
 {% endblock %}
 

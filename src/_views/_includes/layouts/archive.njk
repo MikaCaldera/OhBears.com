@@ -1,16 +1,23 @@
 {% extends 'layouts/base.njk' %}
 
-{# Intro content #}
-{% set introHeading = title %}
-{% set introSummary %}{{ content | safe }}{% endset %}
+{% if postListHeading == null %}
+  {% set postListHeading = 'All posts' %}
+{% endif %}
 
-{# Post list content #}
-{% set postListHeading = 'All posts' %}
-{% set postListItems = collections.posts %}
+{% if collection == null %}
+  {% set postListItems = collections.posts %}
+{% else %}
+    {% if tag != null %}
+      {% set collection = tag | slug %}
+      {% set postListHeading = tag + " " + title %}
+    {% endif %}
+    {% set postListItems = collections[collection] %}
+{% endif %}
 
 {% block content %}
   <main id="main-content" tabindex="-1">
-    {% include "partials/components/intro.njk" %}
-    {% include "partials/components/post-list.njk" %}
+    <div class="container">
+      {% include "partials/components/post-list.njk" %}
+    </div>
   </main>
 {% endblock %}

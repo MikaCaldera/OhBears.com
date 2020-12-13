@@ -1,5 +1,5 @@
 {
-  "name": "mika-attempt",
+  "name": "zero-point",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
@@ -27,6 +27,7 @@
     "eleventy-plugin-pwa": "^1.0.8",
     "eleventy-plugin-lazyimages": "^2.0.1",
     "make-dir-cli": "^2.0.0",
+    "rimraf": "^3.0.2",
     "prettier": "^1.19.1",
     "rollup": "^1.32.1",
     "rollup-plugin-commonjs": "^10.1.0",
@@ -39,19 +40,21 @@
     "sass:process": "npm run sass:tokens && sass src/_assets/scss/app.scss src/_assets/output/css/app.css --style=compressed",
     "cms:precompile": "make-dir dist/admin && nunjucks-precompile src > dist/admin/templates.js -i \"\\.(njk|css|svg)$\"",
     "cms:bundle": "rollup --config",
+    "cms:remove": "rimraf dist/admin && rimraf dist/node_modules",
     "start": "cross-env ELEVENTY_ENV=development concurrently \"npm run sass:process -- --watch\" \"npm run cms:bundle -- --watch\" \"chokidar \\\"src/**\\\" -c \\\"npm run cms:precompile\\\"\" \"npm run serve\"",
     "serve": "cross-env ELEVENTY_ENV=development npx eleventy --serve",
-    "production": "npm run sass:process && npm run cms:precompile && npm run cms:bundle && npx eleventy"
+    "production": "npm run sass:process && npm run cms:precompile && npm run cms:bundle && npx eleventy",
+    "deliver": "npm run sass:process && npm run cms:precompile && npm run cms:bundle && npx eleventy && npm run cms:remove"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hankchizljaw/hylia.git"
+    "url": "git+https://github.com/RebelInteractiveGroup/zero-point.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hankchizljaw/hylia/issues"
+    "url": "https://github.com/RebelInteractiveGroup/zero-point/issues"
   },
-  "homepage": "https://github.com/hankchizljaw/hylia#readme"
+  "homepage": "https://github.com/RebelInteractiveGroup/zero-point#readme"
 }
